@@ -98,16 +98,13 @@ def honeypot(request: RequestBody, x_api_key: str = Header(None)):
     else:
         reply = "Can you clarify your message?"
 
-    # Send final callback after 5 turns
-    if (
-        session["scamDetected"]
-        and session["turns"] >= 5
-        and not session["callbackSent"]
-    ):
-        send_callback(request.sessionId, session)
-        session["callbackSent"] = True
+    # Send final callback after detection
+    if session["scamDetected"] and not session["callbackSent"]:
+    send_callback(request.sessionId, session)
+    session["callbackSent"] = True
 
     return {
         "status": "success",
         "reply": reply
     }
+
