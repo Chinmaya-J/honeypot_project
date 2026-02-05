@@ -100,11 +100,12 @@ def honeypot(request: RequestBody, x_api_key: str = Header(None)):
 
     # Send final callback after detection
     if session["scamDetected"] and not session["callbackSent"]:
-    send_callback(request.sessionId, session)
-    session["callbackSent"] = True
+        send_callback(request.sessionId, session)
+        session["callbackSent"] = True
 
     return {
         "status": "success",
         "reply": reply
     }
+
 
